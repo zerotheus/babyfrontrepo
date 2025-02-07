@@ -1,5 +1,5 @@
 import { Button, Card, HStack, VStack } from "@chakra-ui/react";
-import React from "react";
+import React, { useContext } from "react";
 import { Header } from "../primitive/Header";
 
 const tasks = [
@@ -62,9 +62,12 @@ const TaskCard = ({ task }) => {
 };
 
 export function Dashboard() {
+  const userJson = localStorage.getItem("user");
+  const user = JSON.parse(userJson)
+  console.log(user.name);
   return (
     <>
-      <Header user={{"name":"nome"}}></Header>
+      <Header user={{"name":user.name}}></Header>
       <HStack my={"20"} justifyContent={"center"} wrap={"wrap"} gap={10}>
         {tasks.map((task, index) => (
           <TaskCard key={index} task={task} />

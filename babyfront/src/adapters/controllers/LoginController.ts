@@ -5,7 +5,6 @@ export default class LoginController {
   public static async login(data: any, presenter: Function) {
     const response: LoginResponseModel = await LoginUseCaseImpl.execute(data)
     let status: number
-    console.log(response)
     if (response.user && response.user.uuid) {
       status = 4 // There is all register
       if (!response.accesstoken || !response.refreshtoken) {
@@ -32,5 +31,6 @@ export default class LoginController {
       doctorData: response.doctor,
     }
     presenter(ViewModel)
+    return response
   }
 }
