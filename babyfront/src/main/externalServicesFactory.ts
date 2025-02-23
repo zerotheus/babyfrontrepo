@@ -5,8 +5,7 @@ import HttpMaternalDataOfApregnant from '@/adapters/gateways/HttpMaternalDataOfA
 
 const LoginImpl = new HttpLogin(HttpClientImpl)
 const ListAllDoctorsImpl: HttpListAllDoctors = new HttpListAllDoctors(HttpClientImpl);
-const ListAllMaternalData: HttpMaternalDataOfApregnant = new HttpMaternalDataOfApregnant(HttpClientImpl)
+const MaternalDataOfApregnantImpl:HttpMaternalDataOfApregnant = new HttpMaternalDataOfApregnant(HttpClientImpl)
 
 
-
-export { LoginImpl, ListAllDoctorsImpl,ListAllMaternalData }
+export { LoginImpl, ListAllDoctorsImpl,MaternalDataOfApregnantImpl }
