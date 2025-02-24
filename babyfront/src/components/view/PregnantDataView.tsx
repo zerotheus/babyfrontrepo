@@ -16,6 +16,8 @@ import {
 import { GraphicCard } from "../primitive/GraphicCard";
 import axios from "axios";
 import { BASE_URL, PORT } from "@/config";
+import ListAllFetalRegisterController from "@/adapters/controllers/ListAllFetalRegisterController";
+import ListAllGlicoseRegisterController from "@/adapters/controllers/ListAllGlicoseRegisterController";
 
 function getTimeFromDate(dateString) {
   const date = new Date(dateString);
@@ -41,9 +43,9 @@ export function PregnantDataView() {
   const params = useParams();
   const id = params.id;
   const [dados, setDados] = useState([]);
+  const [dadosFetais, setDadosFetais] = useState([]);
+  const [dadosGlicose, setDadosGlicose] = useState([]);
   const [paciente, setPaciente] = useState()
-
-  axios.get(`${BASE_URL}:${PORT}`)
 
   useEffect(() => {
     if (!id) return;
@@ -57,6 +59,30 @@ export function PregnantDataView() {
     };
     getMaternalData();
   }, []);
+  useEffect(() => {
+    if (!id) return;
+    const getFetalData = async () => {
+      try {
+        const response = await ListAllFetalRegisterController.getData(id, () => {});
+        setDadosFetais(response);
+      } catch (error) {
+        console.error("Erro ao buscar os dados:", error);
+      }
+    };
+    getFetalData();
+  }, []);
+  useEffect(() => {
+    if (!id) return;
+    const getGlicoseData = async () => {
+      try {
+        const response = await ListAllGlicoseRegisterController.getData(id, () => {});
+        setDadosGlicose(response);
+      } catch (error) {
+        console.error("Erro ao buscar os dados:", error);
+      }
+    };
+    getGlicoseData();
+  }, []);
 
   const dadosDoGrafico = dados.slice(0, 6).map((value) => {
     return {
@@ -64,6 +90,19 @@ export function PregnantDataView() {
       UserHeartRate: value.UserHeartRate,
       SystolicPressure: value.SystolicPressure,
       DiastolicPressure: value.DiastolicPressure,
+    };
+  });
+  const dadosDoGraficoFetal = dadosFetais.slice(0, 6).map((value) => {
+    return {
+      Date: getTimeFromDate(value.Date),
+      FetusDisplacement: value.FetusDisplacement,
+      BabyHeartRate:value.BabyHeartRate
+    };
+  });  
+  const dadosDoGraficoGlicose = dadosGlicose.slice(0, 6).map((value) => {
+    return {
+      Date: getTimeFromDate(value.Date),
+      BloodGlucose: value.BloodGlucose,
     };
   });
 
@@ -86,6 +125,18 @@ export function PregnantDataView() {
         eixoX={"Date"}
         eixoY={"DiastolicPressure"}
         titulo={"Pressão Diastolica"}
+      />
+      <GraphicCard
+        dadosDoGrafico={dadosDoGraficoFetal}
+        eixoX={"Date"}
+        eixoY={"FetusDisplacement"}
+        titulo={"Movimento fetal"}
+      />
+      <GraphicCard
+        dadosDoGrafico={dadosDoGraficoGlicose}
+        eixoX={"Date"}
+        eixoY={"BloodGlucose"}
+        titulo={"Glicose"}
       />
     </HStack>
   );
