@@ -1,5 +1,5 @@
 import MaternalDataOfApregnantController from "@/adapters/controllers/MaternalDataOfAPregnantController";
-import { HStack, Text } from "@chakra-ui/react";
+import { HStack, Text, VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
@@ -18,6 +18,11 @@ import axios from "axios";
 import { BASE_URL, PORT } from "@/config";
 import ListAllFetalRegisterController from "@/adapters/controllers/ListAllFetalRegisterController";
 import ListAllGlicoseRegisterController from "@/adapters/controllers/ListAllGlicoseRegisterController";
+import ListAllPregnantController from "@/adapters/controllers/ListAllPregnantController";
+import { PressureGraphicCard } from "../primitive/PressureGraphicCard";
+import { Header } from "../primitive/Header";
+import GetOnePregnantDataController from "@/adapters/controllers/GetOnePregnantDataController";
+
 
 function getTimeFromDate(dateString) {
   const date = new Date(dateString);
@@ -45,46 +50,62 @@ export function PregnantDataView() {
   const [dados, setDados] = useState([]);
   const [dadosFetais, setDadosFetais] = useState([]);
   const [dadosGlicose, setDadosGlicose] = useState([]);
-  const [paciente, setPaciente] = useState()
+  const [paciente, setPaciente] = useState({patientName:'Usuário'})
+  const [filtro, setFiltro] = useState(1)
+
+
+  const getMaternalData = async () => {
+    try {
+      const response = await MaternalDataOfApregnantController.getData(id);
+      setDados(response);
+    } catch (error) {
+      console.error("Erro ao buscar os dados:", error);
+    }
+  };
+
+  const getFetalData = async () => {
+    try {
+      const response = await ListAllFetalRegisterController.getData(id, () => {});
+      setDadosFetais(response);
+    } catch (error) {
+      console.error("Erro ao buscar os dados:", error);
+    }
+  };
+
+  const getGlicoseData = async () => {
+    try {
+      const response = await ListAllGlicoseRegisterController.getData(id, () => {});
+      setDadosGlicose(response);
+    } catch (error) {
+      console.error("Erro ao buscar os dados:", error);
+    }
+  };
+
+  const getPatient = async () => {
+    try {
+      const responsePregantData = await GetOnePregnantDataController.getData(id, () => {})
+      setPaciente(responsePregantData)
+      localStorage.setItem("pregnant", id)
+      
+      console.log(id);
+      
+      
+    } catch (error) {
+      console.error("Erro ao buscar os dados:", error);
+    }
+  };
 
   useEffect(() => {
     if (!id) return;
-    const getMaternalData = async () => {
-      try {
-        const response = await MaternalDataOfApregnantController.getData(id);
-        setDados(response);
-      } catch (error) {
-        console.error("Erro ao buscar os dados:", error);
-      }
-    };
     getMaternalData();
-  }, []);
-  useEffect(() => {
-    if (!id) return;
-    const getFetalData = async () => {
-      try {
-        const response = await ListAllFetalRegisterController.getData(id, () => {});
-        setDadosFetais(response);
-      } catch (error) {
-        console.error("Erro ao buscar os dados:", error);
-      }
-    };
     getFetalData();
-  }, []);
-  useEffect(() => {
-    if (!id) return;
-    const getGlicoseData = async () => {
-      try {
-        const response = await ListAllGlicoseRegisterController.getData(id, () => {});
-        setDadosGlicose(response);
-      } catch (error) {
-        console.error("Erro ao buscar os dados:", error);
-      }
-    };
     getGlicoseData();
+    getPatient();
   }, []);
+  
 
-  const dadosDoGrafico = dados.slice(0, 6).map((value) => {
+
+  const dadosDoGrafico = dados.slice(0, 47).map((value) => {
     return {
       Date: getTimeFromDate(value.Date),
       UserHeartRate: value.UserHeartRate,
@@ -92,7 +113,7 @@ export function PregnantDataView() {
       DiastolicPressure: value.DiastolicPressure,
     };
   });
-  const dadosDoGraficoFetal = dadosFetais.slice(0, 6).map((value) => {
+  const dadosDoGraficoFetal = dadosFetais.slice(0, 47).map((value) => {
     return {
       Date: getTimeFromDate(value.Date),
       FetusDisplacement: value.FetusDisplacement,
@@ -107,6 +128,18 @@ export function PregnantDataView() {
   });
 
   return (
+
+    <VStack alignContent={"flex-start"}>
+    <Header user={{"name": paciente.patientName}}/>
+    <VStack>
+      <Text textStyle="3xl">Dados da Gestante</Text>
+      <Text textStyle="2xl">Paciente: {paciente.patientName}, Gestação: {paciente.babyName}</Text>
+      {/* fazer funcao que calcule a semana da gestacao, de acordo com a data inicial da gestacao  */}
+      <Text textStyle="2xl">Semana de gestação: </Text> 
+    </VStack>
+
+
+
     <HStack gap={30} wrap="wrap" justifyContent="center">
       <GraphicCard
         dadosDoGrafico={dadosDoGrafico}
@@ -114,17 +147,13 @@ export function PregnantDataView() {
         eixoY={"UserHeartRate"}
         titulo={"Frequência Cardíaca"}
       />
-      <GraphicCard
+     
+      <PressureGraphicCard
         dadosDoGrafico={dadosDoGrafico}
         eixoX={"Date"}
-        eixoY={"SystolicPressure"}
-        titulo={"Pressão sistolica"}
-      />
-      <GraphicCard
-        dadosDoGrafico={dadosDoGrafico}
-        eixoX={"Date"}
-        eixoY={"DiastolicPressure"}
-        titulo={"Pressão Diastolica"}
+        eixoYSistolica={"SystolicPressure"}
+        eixoYDistolica={"DiastolicPressure"}
+        titulo ={"Pressão Arterial"}
       />
       <GraphicCard
         dadosDoGrafico={dadosDoGraficoFetal}
@@ -139,5 +168,7 @@ export function PregnantDataView() {
         titulo={"Glicose"}
       />
     </HStack>
+
+    </VStack>
   );
 }
