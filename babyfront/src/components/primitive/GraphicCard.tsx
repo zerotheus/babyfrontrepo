@@ -2,11 +2,9 @@ import { Button, Card, Text} from "@chakra-ui/react";
 import { ResponsiveContainer, BarChart, CartesianGrid, XAxis, YAxis, Legend, Bar, Rectangle, Tooltip } from "recharts";
 import { useNavigate } from "react-router-dom";
 
-export const GraphicCard = ({ dadosDoGrafico, titulo,eixoX,eixoY }) => {
+export const GraphicCard = ({ dadosDoGrafico, titulo,eixoX,eixoY,tipo }) => {
   const navigate = useNavigate()
-  // const pregnantJson =  
   const pregnantId = localStorage.getItem("pregnant")
-  // const { id } = pregnant
   return (
     <Card.Root width="530px">
       <Card.Body gap="2" alignItems={'center'}>
@@ -42,7 +40,7 @@ export const GraphicCard = ({ dadosDoGrafico, titulo,eixoX,eixoY }) => {
         bg={"#17bcc3"}
         color={'gray.100'}
         width={'200px'}
-        onClick={() => navigate(`/PregnantData/${pregnantId}/History/`)}
+        onClick={() => navigate(`/PregnantData/${pregnantId}/History/${tipo}`)}
        >
       Ver mais
       </Button>

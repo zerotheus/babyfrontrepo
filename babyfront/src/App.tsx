@@ -11,7 +11,7 @@ function App() {
       <Route path="/" element={<LoginPage />} />
       <Route path="/Home" element={<Home />} />
       <Route path="/PregnantData/:id" element={<PregnantDataView />} />
-      <Route path="/PregnantData/:id/History/" element={<DataHistory />} />
+      <Route path="/PregnantData/:id/History/:type" element={<DataHistory />} />
     </Routes>
   );
 }

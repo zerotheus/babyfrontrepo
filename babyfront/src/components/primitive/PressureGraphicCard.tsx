@@ -1,7 +1,10 @@
 import { Button, Card, Text} from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 import { ResponsiveContainer, BarChart, CartesianGrid, XAxis, YAxis, Legend, Bar, Rectangle, Tooltip, LineChart, Line } from "recharts";
 
-export const PressureGraphicCard = ({ dadosDoGrafico, titulo,eixoYSistolica, eixoYDistolica }) => {
+export const PressureGraphicCard = ({ dadosDoGrafico, titulo,eixoYSistolica, eixoYDistolica,tipo }) => {
+  const navigate = useNavigate()
+  const pregnantId = localStorage.getItem("pregnant")
   return (
     <Card.Root width="530px">
       <Card.Body gap="2" justifyContent={'center'} alignItems={'center'}>
@@ -32,7 +35,7 @@ export const PressureGraphicCard = ({ dadosDoGrafico, titulo,eixoYSistolica, eix
       </Card.Body>
 
       <Card.Footer justifyContent="center">
-      <Button size={'lg'} variant="outline" bg={"#17bcc3"} color={'gray.100'} width={'200px'}>
+      <Button size={'lg'} variant="outline" bg={"#17bcc3"} color={'gray.100'} width={'200px'} onClick={() => navigate(`/PregnantData/${pregnantId}/History/${tipo}`)}>
                   Ver mais
       </Button>
       </Card.Footer>
