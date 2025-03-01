@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import  { Home } from "./components/view/Home";
+import { Home } from "./components/view/Home";
 import React from "react";
 import LoginPage from "./components/view/LoginPage";
 import { PregnantDataView } from "./components/view/PregnantDataView";

@@ -22,6 +22,7 @@ import ListAllPregnantController from "@/adapters/controllers/ListAllPregnantCon
 import { PressureGraphicCard } from "../primitive/PressureGraphicCard";
 import { Header } from "../primitive/Header";
 import GetOnePregnantDataController from "@/adapters/controllers/GetOnePregnantDataController";
+import { PatientCard } from "../primitive/PatientCard";
 
 export function getTimeFromDate(dateString) {
   const date = new Date(dateString);
@@ -32,7 +33,7 @@ export function getTimeFromDate(dateString) {
   });
 }
 
-export function  calcularDiferencaSemanas(dataString) {
+export function calcularDiferencaSemanas(dataString) {
   const dataFornecida = new Date(dataString);
   const dataAtual = new Date();
 
@@ -46,7 +47,7 @@ export function  calcularDiferencaSemanas(dataString) {
 }
 
 function mapHeartRateData(dataArray) {
-  let contador = 0;
+  const contador = 0;
   const eixoX = dataArray.map((item) => item.Date);
   const eixoY = dataArray.map((item) => item.UserHeartRate);
 
@@ -78,7 +79,7 @@ export function PregnantDataView() {
     try {
       const response = await ListAllFetalRegisterController.getData(
         id,
-        () => {}
+        () => { }
       );
       setDadosFetais(response);
     } catch (error) {
@@ -90,7 +91,7 @@ export function PregnantDataView() {
     try {
       const response = await ListAllGlicoseRegisterController.getData(
         id,
-        () => {}
+        () => { }
       );
       setDadosGlicose(response);
     } catch (error) {
@@ -102,7 +103,7 @@ export function PregnantDataView() {
     try {
       const responsePregantData = await GetOnePregnantDataController.getData(
         id,
-        () => {}
+        () => { }
       );
       setPaciente(responsePregantData);
       localStorage.setItem("pregnant", id);
@@ -143,23 +144,19 @@ export function PregnantDataView() {
   });
 
   return (
-    <VStack alignContent={"flex-start"}>
+    <VStack alignContent={"flex-start"} gap={30}>
       <Header user={{ name: paciente.patientName }} />
-      <VStack>
-        <Text textStyle="3xl">Dados da Gestante</Text>
-        <Text textStyle="2xl">
-          Paciente: {paciente.patientName}, Gestação: {paciente.babyName}
-        </Text>
-        {/* fazer funcao que calcule a semana da gestacao, de acordo com a data inicial da gestacao  */}
-        <Text textStyle="2xl">Semana de gestação: {calcularDiferencaSemanas(paciente.initialDate)}</Text>
-      </VStack>
-
+      <PatientCard
+        patientName={paciente.patientName}
+        gestation={paciente.babyName}
+        week={calcularDiferencaSemanas(paciente.initialDate)}
+      />
       <HStack gap={30} wrap="wrap" justifyContent="center">
         <GraphicCard
           dadosDoGrafico={dadosDoGrafico}
           eixoX={"Date"}
           eixoY={"UserHeartRate"}
-          titulo={"Frequência Cardíaca"} tipo={"bpm"}          
+          titulo={"Frequência Cardíaca"} tipo={"bpm"}
         />
 
         <PressureGraphicCard
@@ -174,12 +171,12 @@ export function PregnantDataView() {
           dadosDoGrafico={dadosDoGraficoFetal}
           eixoX={"Date"}
           eixoY={"FetusDisplacement"}
-          titulo={"Movimento fetal"} tipo={"fetalMovement"}        />
+          titulo={"Movimento fetal"} tipo={"fetalMovement"} />
         <GraphicCard
           dadosDoGrafico={dadosDoGraficoGlicose}
           eixoX={"Date"}
           eixoY={"BloodGlucose"}
-          titulo={"Glicose"} tipo={"Glicose"}        />
+          titulo={"Glicose"} tipo={"Glicose"} />
       </HStack>
     </VStack>
   );
