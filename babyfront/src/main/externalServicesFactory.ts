@@ -6,6 +6,7 @@ import HttpListAllFetalRegister from '@/adapters/gateways/HttpListAllFetalRegist
 import HttpListAllGlicoseRegister from '@/adapters/gateways/HttpListAllGlicoseRegister';
 import HttpGetOnePregnantData from '@/adapters/gateways/HttpGetOnePregnantData';
 import HttpListAllPregnant from '@/adapters/gateways/HttpListAllPregnant';
+import HttpAssociatePregnant from '@/adapters/gateways/HttpAssociatePregnant';
 
 const LoginImpl = new HttpLogin(HttpClientImpl)
 const ListAllDoctorsImpl: HttpListAllDoctors = new HttpListAllDoctors(HttpClientImpl);
@@ -14,6 +15,7 @@ const ListAllFetalRegisterImpl:HttpListAllFetalRegister = new HttpListAllFetalRe
 const ListAllGlicoseRegisterImpl:HttpListAllGlicoseRegister = new HttpListAllGlicoseRegister(HttpClientImpl);
 const GetOnePregnantDataImpl:HttpGetOnePregnantData = new HttpGetOnePregnantData(HttpClientImpl)
 const ListAllPregnantImpl:HttpListAllPregnant = new HttpListAllPregnant(HttpClientImpl) 
+const AssociatePregnantImpl:HttpAssociatePregnant = new HttpAssociatePregnant(HttpClientImpl)
 
 
-export { LoginImpl, ListAllDoctorsImpl,MaternalDataOfApregnantImpl,ListAllFetalRegisterImpl,ListAllGlicoseRegisterImpl,GetOnePregnantDataImpl,ListAllPregnantImpl }
+export { LoginImpl, ListAllDoctorsImpl,MaternalDataOfApregnantImpl,ListAllFetalRegisterImpl,ListAllGlicoseRegisterImpl,GetOnePregnantDataImpl,ListAllPregnantImpl,AssociatePregnantImpl }
