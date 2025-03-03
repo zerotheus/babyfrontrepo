@@ -1,20 +1,22 @@
 import { useEffect, useState } from "react";
 import { InputGroup } from "../ui/input-group";
-import { Input, Table, Text, VStack } from "@chakra-ui/react";
+import { Input, Table, } from "@chakra-ui/react";
 import { LuSearch } from "react-icons/lu";
 import ListAllDoctorsController from "@/adapters/controllers/ListAllDoctorsController";
 import { ListAllDoctorsResponse } from "../../usecases/ListAllDoctorUseCaseImpl/ListAllDoctorsDto";
 
-export default function Searchable() {
+export default function SearchableDoctors() {
   const [input, setInput] = useState("");
   const [doctors, setDoctors] = useState<ListAllDoctorsResponse>();
 
   const getDoctors = async (dados) => {
+    console.log(dados);
     setDoctors(dados);
   };
 
   useEffect(() => {
     ListAllDoctorsController.list(getDoctors);
+
   }, []);
 
   return (
@@ -37,7 +39,7 @@ export default function Searchable() {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            { doctors
+            {doctors
               ?.filter((doctor) =>
                 doctor.name.toLowerCase().includes(input.toLowerCase())
               )

@@ -1,8 +1,8 @@
-import { Button, Card, HStack, VStack } from "@chakra-ui/react";
+import { Button, Card, HStack, Text, VStack } from "@chakra-ui/react";
 import React, { useContext } from "react";
 import { Header } from "../primitive/Header";
 import { TaskCard } from "../primitive/TaskCard";
-import Searchable from "../primitive/Searchable";
+import Searchable from "../primitive/SearchableDoctors";
 
 const tasks = [
   {
@@ -35,13 +35,19 @@ export function Home() {
   console.log(user.name);
   return (
     <>
-      <Header user={{"name":user.name}}></Header>
+      <Header user={{ "name": user.name }}></Header>
+      <Text fontSize={'3xl'} textAlign={"center"} >
+        Olá, {user.name}
+      </Text>
+      <Text fontSize={'3xl'} textAlign={"center"} fontWeight={"bold"}>
+        Seja bem-vindo(a) ao BabyMove!
+      </Text>
       <HStack my={"20"} justifyContent={"center"} wrap={"wrap"} gap={10}>
         {tasks.map((task, index) => (
           <TaskCard key={index} task={task} />
         ))}
       </HStack>
-      <Searchable></Searchable>
+      <Searchable />
     </>
   );
 }
