@@ -1,29 +1,29 @@
 import { Button, Card, HStack, Text, VStack } from "@chakra-ui/react";
-import React, { useContext } from "react";
 import { Header } from "../primitive/Header";
 import { TaskCard } from "../primitive/TaskCard";
-import Searchable from "../primitive/SearchableDoctors";
 
 const tasks = [
   {
-    title: "Gerencia Usuarios",
-    icon: "❤️",
+    title: "Ver todas gestantes",
+    icon: "🤰",
+    route: "ListPregnants"
   },
   {
-    title: "Frequência cardíaca do bebê",
+    title: "Ver todos os médicos",
+    icon: "🩺",
+    route: "ListDoctors"
+  },
+  {
+    title: "Associar paciente-médico",
+    icon: "🥼",
+  },
+  {
+    title: "Criar perfil de médico",
     icon: "🩺",
   },
   {
-    title: "Glicemia da gestante",
-    icon: "🩸",
-  },
-  {
-    title: "Associar Paciente Médico",
-    icon: "🙂",
-  },
-  {
-    title: "Dashboards",
-    icon: "💚",
+    title: "Criar perfil de gestante",
+    icon: "🤰",
   },
 ];
 
@@ -44,10 +44,14 @@ export function Home() {
       </Text>
       <HStack my={"20"} justifyContent={"center"} wrap={"wrap"} gap={10}>
         {tasks.map((task, index) => (
-          <TaskCard key={index} task={task} />
+          <TaskCard
+            key={index}
+            title={task.title}
+            icon={task.icon}
+            route={task.route}
+          />
         ))}
       </HStack>
-      <Searchable />
     </>
   );
 }

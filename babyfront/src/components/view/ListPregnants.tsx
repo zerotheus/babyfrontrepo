@@ -1,4 +1,3 @@
-import ListAllPregnantController from "@/adapters/controllers/ListAllPregnantController";
 import { Header } from "../primitive/Header";
 import SearchablePregnants from "../primitive/SearchablePregnant";
 
