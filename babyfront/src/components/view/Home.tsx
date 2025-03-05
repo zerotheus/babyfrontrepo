@@ -16,6 +16,7 @@ const tasks = [
   {
     title: "Associar paciente-médico",
     icon: "🥼",
+    route: "AssociatePregnantDoctor"
   },
   {
     title: "Criar perfil de médico",

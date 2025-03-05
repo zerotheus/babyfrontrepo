@@ -5,7 +5,7 @@ import { PregnantDataView } from "./components/view/PregnantDataView";
 import { DataHistory } from "./components/view/DataHistory";
 import ListPregnants from "./components/view/ListPregnants";
 import ListDoctors from "./components/view/ListDoctors";
-
+import { AssociatePregnantDoctor } from "./components/view/AssociatePregnantDoctor";
 function App() {
   return (
     <Routes>
@@ -15,6 +15,7 @@ function App() {
       <Route path="/PregnantData/:id/History/:type" element={<DataHistory />} />
       <Route path="/ListPregnants" element={<ListPregnants />} />
       <Route path="/ListDoctors" element={<ListDoctors />} />
+      <Route path="/AssociatePregnantDoctor" element={<AssociatePregnantDoctor />} />
     </Routes>
   );
 }
