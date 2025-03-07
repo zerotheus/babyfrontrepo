@@ -158,7 +158,6 @@ export function PregnantDataView() {
           eixoY={"UserHeartRate"}
           titulo={"Frequência Cardíaca"} tipo={"bpm"}
         />
-
         <PressureGraphicCard
           dadosDoGrafico={dadosDoGrafico}
           eixoX={"Date"}
@@ -172,6 +171,11 @@ export function PregnantDataView() {
           eixoX={"Date"}
           eixoY={"FetusDisplacement"}
           titulo={"Movimento fetal"} tipo={"fetalMovement"} />
+        <GraphicCard
+          dadosDoGrafico={dadosDoGraficoFetal}
+          eixoX={"Date"}
+          eixoY={"BabyHeartRate"}
+          titulo={"Batimento cardiaco do Bebê"} tipo={"BPM do Bebê"} />
         <GraphicCard
           dadosDoGrafico={dadosDoGraficoGlicose}
           eixoX={"Date"}
