@@ -17,11 +17,10 @@ export const PatientCard = (props) => (
                     <Text fontSize={18}> Gestação: {props.gestation}</Text>
                     <Text fontSize={18}> Semana de gestação: {props.week} </Text>
                 </Card.Description>
-
             </Card.Body>
             <Card.Footer>
-                <Button>Ação 1</Button>
-                <Button>Ação 2</Button>
+                <Button>Associar medico</Button>
+                <Button>Registrar nascimento</Button>
             </Card.Footer>
         </Box>
     </Card.Root >
