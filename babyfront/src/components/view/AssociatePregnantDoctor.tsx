@@ -14,9 +14,14 @@ import { LuCalendar, LuUser, LuWallet } from "react-icons/lu"
 import SearchablePregnants from "../primitive/SearchablePregnant"
 import SearchableDoctors from "../primitive/SearchableDoctors"
 import { Avatar } from "@/components/ui/avatar"
+import SelectMedicCard from "../primitive/SelectMedicCard";
+import SelectPatientCard from "../primitive/SelectPatientCard";
+import { useNavigate } from "react-router";
 
 
 export function AssociatePregnantDoctor() {
+
+    const navigate = useNavigate();
 
     return (
         <StepsRoot defaultValue={1} count={2} width={920} my={16} mx={'auto'}>
@@ -61,75 +66,16 @@ export function AssociatePregnantDoctor() {
                         <Card.Body gap="2" >
                             <Card.Title mt="2">Paciente(s)</Card.Title>
 
-                            <Card.Root >
-                                <Card.Body >
-                                    <HStack >
-                                        <Avatar
-                                            src="https://picsum.photos/200/300"
-                                            name="Nue Camp"
-                                            size="lg"
-                                            shape="rounded"
-                                        />
-                                        <MdOutlinePregnantWoman />
-                                        <Text> Nome mãe</Text>
-                                        <FaBaby />
-                                        <Text> Nome bebê</Text>
-                                    </HStack>
-
-                                </Card.Body>
-
-                            </Card.Root>
-
-                            <Card.Root >
-                                <Card.Body >
-                                    <HStack >
-                                        <Avatar
-                                            src="https://picsum.photos/200/300"
-                                            name="Nue Camp"
-                                            size="lg"
-                                            shape="rounded"
-                                        />
-                                        <MdOutlinePregnantWoman />
-                                        <Text> Nome mãe</Text>
-                                        <FaBaby />
-                                        <Text> Nome bebê</Text>
-                                    </HStack>
-
-                                </Card.Body>
-
-                            </Card.Root>
-
-
-
+                            
+                            <SelectPatientCard name={'joana'} babyName={'Jorge'}/>
                         </Card.Body>
 
                     </Card.Root>
 
-                    <Card.Root width="420px">
-                        <Card.Body gap="2" >
-                            <Card.Title mt="2">Paciente(s)</Card.Title>
-
-
-                            <HStack >
-                                <Avatar
-                                    src="https://picsum.photos/200/300"
-                                    name="Nue Camp"
-                                    size="lg"
-                                    shape="rounded"
-                                />
-                                <MdOutlinePregnantWoman />
-                                <Text> Nome médico</Text>
-                            </HStack>
-
-
-
-
-                        </Card.Body>
-
-                    </Card.Root>
+                    <SelectMedicCard name={'joana'} babyName={'Jorge'}/>
                 </HStack>
 
-                <Button>Confirmar </Button>
+                <Button mt={4} marginLeft={4} onClick={() => navigate('/Home')}>Confirmar</Button>
             </StepsCompletedContent>
 
 
