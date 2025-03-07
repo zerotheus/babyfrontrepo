@@ -19,12 +19,14 @@ const tasks = [
     route: "AssociatePregnantDoctor"
   },
   {
-    title: "Criar perfil de médico",
+    title: "Criar perfil de médico ou paciente",
     icon: "🩺",
+    route: "Form"
   },
   {
-    title: "Criar perfil de gestante",
+    title: "Ultimos alertas",
     icon: "🤰",
+    route: "Form"
   },
 ];
 
