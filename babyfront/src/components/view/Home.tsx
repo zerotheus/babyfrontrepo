@@ -39,13 +39,13 @@ export function Home() {
   return (
     <>
       <Header user={{ "name": user.name }}></Header>
-      <Text fontSize={'3xl'} textAlign={"center"} >
-        Olá, {user.name}
-      </Text>
-      <Text fontSize={'3xl'} textAlign={"center"} fontWeight={"bold"}>
+      <Text fontSize={'3xl'} mt={8} textAlign={"center"} fontWeight={"bold"}>
         Seja bem-vindo(a) ao BabyMove!
       </Text>
-      <HStack my={"20"} justifyContent={"center"} wrap={"wrap"} gap={10}>
+      <Text fontSize={'2xl'} textAlign={"center"} >
+        Escolha uma opção
+      </Text>
+      <HStack my={"10"} justifyContent={"center"} wrap={"wrap"} gap={10}>
         {tasks.map((task, index) => (
           <TaskCard
             key={index}

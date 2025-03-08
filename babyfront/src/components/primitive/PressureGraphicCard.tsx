@@ -28,8 +28,8 @@ export const PressureGraphicCard = ({ dadosDoGrafico, titulo, eixoYSistolica, ei
             <YAxis />
             <Tooltip />
             <Legend />
-            <Line type="monotone" dataKey={eixoYSistolica} stroke="#fe6070" activeDot={{ r: 8 }} />
-            <Line type="monotone" dataKey={eixoYDistolica} stroke="#17bcc3" />
+            <Line type="monotone" dataKey={eixoYSistolica} stroke="#fe6070" activeDot={{ r: 8 }} name="Sistólica" />
+            <Line type="monotone" dataKey={eixoYDistolica} stroke="#17bcc3" name="Distólica" />
           </LineChart>
         </ResponsiveContainer>
       </Card.Body>

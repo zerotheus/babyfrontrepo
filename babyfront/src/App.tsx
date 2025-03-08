@@ -7,6 +7,7 @@ import ListPregnants from "./components/view/ListPregnants";
 import ListDoctors from "./components/view/ListDoctors";
 import { AssociatePregnantDoctor } from "./components/view/AssociatePregnantDoctor";
 import Form from "./components/primitive/Form";
+
 function App() {
   return (
     <Routes>
@@ -17,8 +18,8 @@ function App() {
       <Route path="/ListPregnants" element={<ListPregnants />} />
       <Route path="/ListDoctors" element={<ListDoctors />} />
       <Route path="/AssociatePregnantDoctor" element={<AssociatePregnantDoctor />} />
-      <Route path="/Form" element={<Form/>}/>
-      <Route path="/Form/Edit" element={<Form/>}/>
+      <Route path="/Form" element={<Form />} />
+      <Route path="/Form/Edit" element={<Form />} />
     </Routes>
   );
 }

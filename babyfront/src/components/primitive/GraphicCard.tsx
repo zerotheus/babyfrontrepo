@@ -2,7 +2,7 @@ import { Button, Card, Text } from "@chakra-ui/react";
 import { ResponsiveContainer, BarChart, CartesianGrid, XAxis, YAxis, Legend, Bar, Rectangle, Tooltip } from "recharts";
 import { useNavigate } from "react-router-dom";
 
-export const GraphicCard = ({ dadosDoGrafico, titulo, eixoX, eixoY, tipo }) => {
+export const GraphicCard = ({ dadosDoGrafico, titulo, eixoX, eixoY, tipo, legenda }) => {
   const navigate = useNavigate()
   const pregnantId = localStorage.getItem("pregnant")
   return (
@@ -27,6 +27,7 @@ export const GraphicCard = ({ dadosDoGrafico, titulo, eixoX, eixoY, tipo }) => {
             <Bar
               dataKey={eixoY}
               fill="#fe6070"
+              name={titulo}
               activeBar={<Rectangle fill="pink" stroke="blue" />}
             />
           </BarChart>
