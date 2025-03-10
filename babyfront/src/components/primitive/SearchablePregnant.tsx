@@ -15,7 +15,7 @@ import {
     ActionBarSeparator,
 } from "../ui/action-bar"
 
-import { LuSearch } from "react-icons/lu";
+import { LuBaby, LuSearch } from "react-icons/lu";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegTrashAlt } from "react-icons/fa";
 import ListAllPregnantController from "@/adapters/controllers/ListAllPregnantController";
@@ -79,6 +79,7 @@ export default function SearchablePregnants() {
                                 <Table.ColumnHeader fontWeight={'bold'}>Telefone</Table.ColumnHeader>
                                 <Table.ColumnHeader fontWeight={'bold'}>Data de nascimento</Table.ColumnHeader>
                                 <Table.ColumnHeader fontWeight={'bold'}>Data de cadastro</Table.ColumnHeader>
+                                <Table.ColumnHeader fontWeight={'bold'}>Gestações</Table.ColumnHeader>
                                 <Table.ColumnHeader fontWeight={'bold'}>Ações</Table.ColumnHeader>
                             </Table.Row>
                         </Table.Header>
@@ -111,10 +112,11 @@ export default function SearchablePregnants() {
                                         <Table.Cell>{pregnant.email}</Table.Cell>
                                         <Table.Cell>{pregnant.telefone}</Table.Cell>
                                         <Table.Cell>{pregnant.birthday}</Table.Cell>
-                                        <Table.Cell>{pregnant.registerDate}</Table.Cell>
+                                        <Table.Cell>{pregnant.registerDate} </Table.Cell>
+                                        <Table.Cell> <LuBaby title="Cadastrar gestação" cursor={"pointer"} size={24} color="red" /> </Table.Cell>
                                         <Table.Cell >
                                             <HStack>
-                                                <FaRegEye cursor={"pointer"} size={24} onClick={() => navigate(`/PregnantData/:${pregnant.userID}`)} />
+                                                <FaRegEye cursor={"pointer"} size={24} onClick={() => navigate(`/Pregnant/${pregnant.patientID}`)} />
                                                 <FaRegTrashAlt cursor={"pointer"} size={24} color="red" />
                                             </HStack>
                                         </Table.Cell>

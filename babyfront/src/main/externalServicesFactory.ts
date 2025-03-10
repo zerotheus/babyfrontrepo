@@ -8,6 +8,7 @@ import HttpGetOnePregnantData from '@/adapters/gateways/HttpGetOnePregnantData';
 import HttpListAllPregnant from '@/adapters/gateways/HttpListAllPregnant';
 import HttpAssociatePregnant from '@/adapters/gateways/HttpAssociatePregnant';
 import HttpUserService from '@/adapters/gateways/HttpSaveUser';
+import HttpGetLastGestationOfAPatient from '@/adapters/gateways/HttpGetLastGestationOfAPatient';
 
 const LoginImpl = new HttpLogin(HttpClientImpl)
 const ListAllDoctorsImpl: HttpListAllDoctors = new HttpListAllDoctors(HttpClientImpl);
@@ -18,6 +19,7 @@ const GetOnePregnantDataImpl:HttpGetOnePregnantData = new HttpGetOnePregnantData
 const ListAllPregnantImpl:HttpListAllPregnant = new HttpListAllPregnant(HttpClientImpl) 
 const AssociatePregnantImpl:HttpAssociatePregnant = new HttpAssociatePregnant(HttpClientImpl)
 const SaveUserImpl: HttpUserService = new HttpUserService(HttpClientImpl);
+const GetLastGestationOfAPatientImpl:HttpGetLastGestationOfAPatient = new HttpGetLastGestationOfAPatient(HttpClientImpl)
 
 
 export { 
@@ -29,5 +31,6 @@ export {
     GetOnePregnantDataImpl,
     ListAllPregnantImpl,
     AssociatePregnantImpl,
-    SaveUserImpl
+    SaveUserImpl,
+    GetLastGestationOfAPatientImpl
 }

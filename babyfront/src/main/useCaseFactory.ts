@@ -1,6 +1,6 @@
 import ListAllDoctorsUseCase from "@/usecases/ListAllDoctorUseCaseImpl/ListAllDoctorsUseCase";
 import LoginUseCase from "../usecases/Login/LoginUseCase"
-import { ListAllDoctorsImpl, LoginImpl,MaternalDataOfApregnantImpl,ListAllFetalRegisterImpl,ListAllGlicoseRegisterImpl, GetOnePregnantDataImpl, ListAllPregnantImpl, AssociatePregnantImpl, SaveUserImpl } from "./externalServicesFactory"
+import { ListAllDoctorsImpl, LoginImpl,MaternalDataOfApregnantImpl,ListAllFetalRegisterImpl,ListAllGlicoseRegisterImpl, GetOnePregnantDataImpl, ListAllPregnantImpl, AssociatePregnantImpl, SaveUserImpl, GetLastGestationOfAPatientImpl } from "./externalServicesFactory"
 import MaternalDataOfApregnant from "@/usecases/ListMaternalDataOfAPregnant/MaternalDataOfAPregnant";
 import ListAllFetalRegister from "@/usecases/ListAllFetalRegister/ListAllFetalRegister";
 import ListAllGlicoseUseCase from "@/usecases/ListAllGlicoseRegister/ListAllGlicoseUseCase";
@@ -8,6 +8,7 @@ import GetOnePregnantUseCase from "@/usecases/GetOnePregnantUseCase/GetOnePregna
 import ListAllPregnantUseCase from "@/usecases/ListAllPregnantUseCase/LIstAllPregnantUseCase";
 import AssociatePregnantUseCase from "@/usecases/associatePregnant/AssociatePregnantUseCase";
 import SaveUserUseCase from "@/usecases/SaveUser/SaveUserUseCase";
+import GetLastGestationOfAPatientUseCase from "@/usecases/GetLastGestationOfAPatientUseCase/GetLastGestationOfAPatientUseCase";
 
 const LoginUseCaseImpl = new LoginUseCase(LoginImpl)
 const ListAllDoctorUseCaseImpl = new ListAllDoctorsUseCase(ListAllDoctorsImpl);
@@ -18,6 +19,7 @@ const GetOnePregnantUseCaseImpl = new GetOnePregnantUseCase(GetOnePregnantDataIm
 const ListAllPregnantUseCaseImpl = new ListAllPregnantUseCase(ListAllPregnantImpl)
 const AssociatePregnantUseCaseImpl = new AssociatePregnantUseCase(AssociatePregnantImpl);
 const SaveUserUseCaseImpl = new SaveUserUseCase(SaveUserImpl)
+const GetLastGestationOfAPatientUseCaseImpl:GetLastGestationOfAPatientUseCase = new GetLastGestationOfAPatientUseCase(GetLastGestationOfAPatientImpl)
 
 export { 
     LoginUseCaseImpl,
@@ -28,5 +30,6 @@ export {
     GetOnePregnantUseCaseImpl,
     ListAllPregnantUseCaseImpl,
     AssociatePregnantUseCaseImpl,
-    SaveUserUseCaseImpl
+    SaveUserUseCaseImpl,
+    GetLastGestationOfAPatientUseCaseImpl
 }
