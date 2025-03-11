@@ -7,12 +7,12 @@ export const TaskCard = (props) => {
   const navigate = useNavigate()
   return (
     <Card.Root width="320px" height={150} shadow={"sm"}  >
-      < Card.Body gap="2" >
-        <Card.Title mt="2" flexWrap={"wrap"}>
+      < Card.Body gap="2" overflow="hidden">
+        <Card.Title mt="2" >
           {props.title} {props.icon}
         </Card.Title>
       </Card.Body >
-      <Card.Footer justifyContent="flex-end">
+      <Card.Footer justifyContent="end">
         <Button
           variant="outline"
           onClick={() => navigate(`/${props.route}`)}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useImperativeHandle, forwardRef } from "react";
 import { InputGroup } from "../ui/input-group";
 import { Button, HStack, Input, Kbd, Stack, Table, VStack, } from "@chakra-ui/react";
 import { LuSearch } from "react-icons/lu";
@@ -23,7 +23,7 @@ import {
 
 
 
-export default function SearchableDoctors() {
+const SearchableDoctors = forwardRef((props, ref) => {
   const [input, setInput] = useState("");
   const [doctors, setDoctors] = useState<ListAllDoctorsResponse>();
   const [page, setPage] = useState(1)
@@ -32,6 +32,12 @@ export default function SearchableDoctors() {
   const indeterminate = hasSelection && selection.length < doctors.length
 
   const navigate = useNavigate()
+
+  useImperativeHandle(ref, () => ({
+    getDoctors: () => selection
+  }));
+
+
 
   const getDoctors = async (dados) => {
     console.log(dados);
@@ -139,3 +145,6 @@ export default function SearchableDoctors() {
     </VStack>
   );
 }
+)
+
+export default SearchableDoctors

@@ -6,7 +6,7 @@ export default function SelectMedicCard(props) {
   return (
     <Card.Root width="420px">
       <Card.Body gap="2">
-        <Card.Title mt="2">Medica(o)</Card.Title>
+        <Card.Title mt="2">Médico(a)</Card.Title>
         <HStack>
           <Avatar
             src="https://picsum.photos/200/300"
@@ -15,7 +15,7 @@ export default function SelectMedicCard(props) {
             shape="rounded"
           />
           <MdOutlinePregnantWoman />
-          <Text>Heloise</Text>
+          <Text>{props.name}</Text>
         </HStack>
       </Card.Body>
     </Card.Root>

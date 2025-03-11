@@ -17,11 +17,27 @@ import { Avatar } from "@/components/ui/avatar"
 import SelectMedicCard from "../primitive/SelectMedicCard";
 import SelectPatientCard from "../primitive/SelectPatientCard";
 import { useNavigate } from "react-router";
-
+import { useRef, useEffect, useState } from "react";
+import AssociatePregnantController from "@/adapters/controllers/AssociatePregnantController";
 
 export function AssociatePregnantDoctor() {
-
     const navigate = useNavigate();
+
+    const childPatientsRef = useRef(null);
+    const childDoctorRef = useRef(null)
+
+
+    // const AssociatePregnantsToDoctor = async (doctorID, pregnantsArray) => {
+    //     for (let index = 0; index < pregnantsArray.length; index++) {
+    //         await AssociatePregnantController.execute(
+    //             doctorID,
+    //             pregnantsArray[index],
+    //             false,
+    //             () => console.log(`associando ${pregnantsArray[index]}`)
+    //         )
+
+    //     }
+    // }
 
     return (
         <StepsRoot defaultValue={1} count={2} width={920} my={16} mx={'auto'}>
@@ -46,7 +62,7 @@ export function AssociatePregnantDoctor() {
                 <Text textStyle="3xl">
                     Escolher Paciente
                 </Text>
-                <SearchablePregnants />
+                <SearchablePregnants ref={childPatientsRef} />
 
             </StepsContent>
 
@@ -54,7 +70,7 @@ export function AssociatePregnantDoctor() {
                 <Text textStyle="3xl">
                     Escolher Paciente
                 </Text>
-                <SearchableDoctors />
+                <SearchableDoctors ref={childDoctorRef} />
             </StepsContent>
 
             <StepsCompletedContent>
@@ -62,20 +78,31 @@ export function AssociatePregnantDoctor() {
                     Confirmação
                 </Text>
                 <HStack gap={20} mt={8}>
-                    <Card.Root width="420px">
+                    <Card.Root width="420px" >
                         <Card.Body gap="2" >
                             <Card.Title mt="2">Paciente(s)</Card.Title>
+                            {childPatientsRef.current?.getPatients().map((patient, index) => (
+                                <SelectPatientCard
+                                    key={index}
+                                    name={patient}
+                                />
+                            ))}
 
-                            
-                            <SelectPatientCard name={'joana'} babyName={'Jorge'}/>
                         </Card.Body>
 
                     </Card.Root>
 
-                    <SelectMedicCard name={'joana'} babyName={'Jorge'}/>
+                    <SelectMedicCard name={childDoctorRef.current?.getDoctors()} babyName={'Jorge'} />
                 </HStack>
 
-                <Button mt={4} marginLeft={4} onClick={() => navigate('/Home')}>Confirmar</Button>
+                <Button
+                    mt={4}
+                    marginLeft={4}
+                    onClick={
+                        () => AssociatePregnantsToDoctor(childDoctorRef.current?.getDoctors(), childPatientsRef.current?.getPatients())}
+                >
+                    Confirmar
+                </Button>
             </StepsCompletedContent>
 
 

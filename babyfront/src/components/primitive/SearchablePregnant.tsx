@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useImperativeHandle, useState, forwardRef } from "react";
 import { InputGroup } from "../ui/input-group";
 import { Box, Button, HStack, Input, Kbd, Stack, Table, Text, VStack } from "@chakra-ui/react";
 import {
@@ -22,13 +22,18 @@ import ListAllPregnantController from "@/adapters/controllers/ListAllPregnantCon
 import { useNavigate } from "react-router";
 import { Checkbox } from "../ui/checkbox";
 
-export default function SearchablePregnants() {
+const SearchablePregnants = forwardRef((props, ref) => {
+
     const [input, setInput] = useState("");
     const [pregnants, setPregnants] = useState([]);
     const [page, setPage] = useState(1)
     const [selection, setSelection] = useState<string[]>([])
     const hasSelection = selection.length > 0
     const indeterminate = hasSelection && selection.length < pregnants.length
+
+    useImperativeHandle(ref, () => ({
+        getPatients: () => selection,
+    }));
 
 
     const navigate = useNavigate()
@@ -156,4 +161,8 @@ export default function SearchablePregnants() {
             )}
         </VStack>
     );
+
 }
+)
+
+export default SearchablePregnants;
