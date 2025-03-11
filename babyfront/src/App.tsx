@@ -8,6 +8,9 @@ import ListDoctors from "./components/view/ListDoctors";
 import { AssociatePregnantDoctor } from "./components/view/AssociatePregnantDoctor";
 import Form from "./components/primitive/Form";
 import PregnantView from "./components/view/PregnantView";
+import SearchableUsers from "./components/primitive/SearchableUsers";
+import ListUsers from "./components/view/ListUsers";
+import FormGestation from "./components/primitive/FormGestation";
 
 function App() {
   return (
@@ -21,7 +24,9 @@ function App() {
       <Route path="/ListDoctors" element={<ListDoctors />} />
       <Route path="/AssociatePregnantDoctor" element={<AssociatePregnantDoctor />} />
       <Route path="/Form" element={<Form />} />
-      <Route path="/Form/Edit" element={<Form />} />
+      <Route path="/Form/Edit/:uuid" element={<Form />} />
+      <Route path="/ListUsers" element={<ListUsers />} />
+      <Route path="/Form/Gestation" element={<FormGestation />} />
     </Routes>
   );
 }

@@ -28,6 +28,11 @@ const tasks = [
     icon: "🤰",
     route: "Form"
   },
+  {
+    title: "Ver todos os usuários",
+    icon: "👤",
+    route: "ListUsers"
+  }
 ];
 
 

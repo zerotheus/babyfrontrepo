@@ -1,14 +1,17 @@
 import User from "@/entities/User";
-import { SaveUserUseCaseImpl } from "@/main/useCaseFactory";
+import { ListAllUsersUseCaseImpl, SaveUserUseCaseImpl } from "@/main/useCaseFactory";
 import SaveUserResponseModel from "@/usecases/SaveUser/SaveUserDTO";
 //import { UserServiceUseCase } from "@/usecases/UserService/UserServiceUseCase";
 
 export default class UserController {
-    public static async save(user: User, presenter: Function) {
-        console.log("UserController | user: " + user);
+    public static async save(user: User, presenter: Function) {        
         const Response: SaveUserResponseModel = await SaveUserUseCaseImpl.execute(user);
+        presenter(Response);        
+    }
+
+    public static async getAllUsers(presenter: Function) {
+        const Response = await ListAllUsersUseCaseImpl.execute();
         presenter(Response);
-        return null;
     }
 
     // public static async get(loginRequest: any, presenter: Function) {

@@ -1,136 +1,227 @@
-import LoginController from "@/adapters/controllers/LoginController";
 import UserController from "@/adapters/controllers/UserController";
-import User from "@/entities/User";
+
 import { HStack, Input, StackSeparator, Button, VStack, Field, NativeSelect, Text  } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { withMask } from "use-mask-input";
 
-export default function Form() {
-    const [activeInputDoctor, setActiveInputDoctor] = useState(1);
-    const [user, setUser] = useState();
-    const [change, setChange] = useState(true);
+export default function Form() {    
+    const [uuid, setUuid] = useState();
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
+    const [password, setPassword] = useState("");
+    const [birthdate, setBirthdate] = useState("");
+    const [gender, setGender] = useState(0);
+    const [type, setType] = useState(1);
+    const [address, setAddress] = useState("");    
+    const [crm, setCrm] = useState("");
+    const [specialization, setSpecialization] = useState("");
     const location = useLocation();
-    const [editMode, setEditMode] = useState(location.pathname.includes("edit"))
+    const [editMode, setEditMode] = useState(location.pathname.includes("edit"));
+    const [state, setState] = useState(location.state);
+    const navigate = useNavigate();
+    
     
     
     useEffect(() => {                
         if (editMode) {
-            LoginController.login({login: "wiiiill97", password: "1234"}, (data: any) => {
-                console.log("Response Login Controller: " + JSON.stringify(data));
-                if (data?.userData) {
-                    console.log("userData: " + JSON.stringify(data?.userData));
-                    setUser(data?.userData)
-                    console.log("User: " + user);
-                }
-            });
+            if (state.type == 1) {
+                setUuid(state.uuid);
+                setName(state.name);
+                setEmail(state.email);
+                setBirthdate(state.birthdate);
+                setPhone(state.phone);
+                setGender(state.gender);
+                setPassword(state.password);
+                setCrm(state.crm);
+                setType(state.type);
+                setAddress(state.address);
+                              
+            }
+            else if (state.type == 2) {
+                setUuid(state.uuid);
+                setName(state.name);
+                setEmail(state.email);
+                setBirthdate(state.birthdate);
+                setPhone(state.phone);
+                setGender(state.gender);
+                setPassword(state.password);                
+                setType(state.type);
+                setAddress(state.address);
+            }
         }
-    }, [change]);
-
-    console.log("Form | After UseEffect");
+    }, []);
+    
 
     function clickBtnSave() {        
-        const _name: string = document.forms["myForm"]["name"].value;
-        const _phone: string = document.forms["myForm"]["phone"].value
-        const _email: string = document.forms["myForm"]["email"].value;
-        const _password: string = document.forms["myForm"]["password"].value;
-        const _birthdate: number = document.forms["myForm"]["datetime"].value;
-        const _gender: number = document.forms["myForm"]["gender"].value;
-        const _type: number = document.forms["myForm"]["type"].value;
-        const _crm: string = document.forms["myForm"]["crm"].value;
-        const _specialization: string = document.forms["myForm"]["specialization"].value;
-        const _address: string = document.forms["myForm"]["address"].value;
-        let user;
-        if (_type == 1) {
+        
+        let _user;
+        if (editMode) {
+            if (type == 1) {
 
-            user = {
-                 uuid: '',
-                 login: _email,
-                 password: _password,
-                 name: _name,
-                 address: _address,
-                 phone: _phone, 
-                 email: _email,
-                 gender: _gender, // 0 - Male, 1 - Female,
-                 birthdate: _birthdate,
-                 date: new Date(),
-                 image: "", 
-                 type: _type, // 0 - Adm, 1 - Doctor, 2 - Pregnant
-                 thirdpartyuser: false,
-                 isConfirmedEmail: false,
-                 CRM: _crm,
-                 specialization: _specialization
+                _user = {
+                     uuid: uuid,
+                     login: email,
+                     password: password,
+                     name: name,
+                     address: address,
+                     phone: phone, 
+                     email: email,
+                     gender: gender, // 0 - Male, 1 - Female,
+                     birthdate: birthdate,
+                     date: new Date(),
+                     image: "", 
+                     type: type, // 0 - Adm, 1 - Doctor, 2 - Pregnant
+                     thirdpartyuser: false,
+                     isConfirmedEmail: false,
+                     CRM: crm,
+                     specialization: specialization
+                }
+                
+            }
+            else {
+                _user = {
+                    uuid: uuid,
+                    login: email,
+                    password: password,
+                    name: name,
+                    address: address,
+                    phone: phone, 
+                    email: email,
+                    gender: gender, // 0 - Male, 1 - Female,
+                    birthdate: birthdate,
+                    date: new Date(),
+                    image: "", 
+                    type: type, // 0 - Adm, 1 - Doctor, 2 - Pregnant
+                    thirdpartyuser: false,
+                    isConfirmedEmail: false,
+               }
             }
             
         }
         else {
-            user = {
-                uuid: '',
-                login: _login,
-                password: _password,
-                name: _name,
-                address: 'Rua Cristo Redentor',
-                phone: _phone, 
-                email: _email,
-                gender: _gender, // 0 - Male, 1 - Female,
-                birthdate: _birthdate,
-                date: new Date(),
-                image: "", 
-                type: _type, // 0 - Adm, 1 - Doctor, 2 - Pregnant
-                thirdpartyuser: false,
-                isConfirmedEmail: false,
-           }
+            if (type == 1) {
+    
+                _user = {
+                     uuid: '',
+                     login: email,
+                     password: password,
+                     name: name,
+                     address: address,
+                     phone: phone, 
+                     email: email,
+                     gender: gender, // 0 - Male, 1 - Female,
+                     birthdate: birthdate,
+                     date: new Date(),
+                     image: "", 
+                     type: type, // 0 - Adm, 1 - Doctor, 2 - Pregnant
+                     thirdpartyuser: false,
+                     isConfirmedEmail: false,
+                     CRM: crm,
+                     specialization: specialization
+                }
+                
+            }
+            else {
+                _user = {
+                    uuid: '',
+                    login: email,
+                    password: password,
+                    name: name,
+                    address: address,
+                    phone: phone, 
+                    email: email,
+                    gender: gender, // 0 - Male, 1 - Female,
+                    birthdate: birthdate,
+                    date: new Date(),
+                    image: "", 
+                    type: type, // 0 - Adm, 1 - Doctor, 2 - Pregnant
+                    thirdpartyuser: false,
+                    isConfirmedEmail: false,
+               }
+            }
         }
+                
+        type === 1 ?
+            UserController.save(_user, (data) => console.log("response data: " + JSON.stringify(data)))
+            : UserController.save(_user, (data) => {
+                if (data?.id) {
+                    _user.uuid = data?.id
+                    navigate("/form/gestation", {
+                        state: {
+                            user: {..._user},
+                        }
+                    });
+                }
+            });
         
-        console.log("obj: " + JSON.stringify(user));
-        UserController.save(user, (data) => console.log("response data: " + data));
     }
 
     return (
         <>
-            <VStack
-                separator={<StackSeparator />}
+            <VStack 
+                mt={12}
+                // separator={<StackSeparator />}
                 gap="12px"
             >
-                <Text fontSize="lg" fontWeight="bold" color="#1F2024">Faça seu cadastro</Text>
-                <Text fontSize="medium" fontWeight="normal" color="#71727A"> Crie uma conta para aproveitar nossos serviços!</Text>
+                <Text fontSize="3xl" fontWeight="bold" color="#1F2024">Faça seu cadastro</Text>
+                <Text fontSize="lg" fontWeight="normal" color="#71727A"> Crie uma conta para aproveitar nossos serviços!</Text>
                 <form 
                     name="myForm"
                     id="form"                    
                 >
-                    <VStack gap="12px">                        
+                    <VStack gap="12px" mt={4}>                        
                         <Field.Root>
                             <Field.Label>Nome Completo: </Field.Label>
                             <Input 
                                 placeholder="Nome Completo"
                                 type="text"
                                 name="name"
-                                outlineColor="#A78BFA"
-                                value={editMode ? user?.name : null}
+                               _focus={{
+                                    borderColor: '#fe6070',
+                                    boxShadow: '0 0 0 1px #fe6070',
+                                    outline: 'none' 
+                                    }}
+                                value={editMode ? name : null}
+                                onChange={(e) => setName(e.target.value)}
                             />
                         </Field.Root>
                         <HStack>
+                            
+                            <Field.Root  >
+                                <Field.Label>Email: </Field.Label>
+                                <Input 
+                                    placeholder="nome@email.com"
+                                    type="email"
+                                    name="email"
+                                     _focus={{
+                                        borderColor: '#fe6070',
+                                        boxShadow: '0 0 0 1px #fe6070',
+                                        outline: 'none' 
+                                        }}
+                                    value={editMode ? email : null}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    
+                                />
+                            </Field.Root>
                             <Field.Root>
                                 <Field.Label>Telefone: </Field.Label>
                                 <Input
                                     placeholder="(99) 99999-9999"
                                     type="text"
                                     name="phone"
-                                    outlineColor="#A78BFA"
+                                    _focus={{
+                                    borderColor: '#fe6070',
+                                    boxShadow: '0 0 0 1px #fe6070',
+                                    outline: 'none' 
+                                    }}
                                     ref={withMask("(99) 99999-9999")}
-                                    value={editMode ? user?.phone : null}
+                                    value={editMode ? phone : null}
+                                    onChange={(e) => setPhone(e.target.value)}
                                 />
                             </Field.Root>
 
-                            <Field.Root>
-                                <Field.Label>Email: </Field.Label>
-                                <Input 
-                                    placeholder="nome@email.com"
-                                    type="email"
-                                    name="email"
-                                    outlineColor="#A78BFA"
-                                />
-                            </Field.Root>
                         </HStack>
                         <Field.Root>
                             <Field.Label>Endereço: </Field.Label>
@@ -138,8 +229,13 @@ export default function Form() {
                                 placeholder="Endereço"
                                 type="text"
                                 name="address"
-                                outlineColor="#A78BFA"
-                                value={editMode ? user?.address : null}
+                                 _focus={{
+                                    borderColor: '#fe6070',
+                                    boxShadow: '0 0 0 1px #fe6070',
+                                    outline: 'none' 
+                                    }}
+                                value={editMode ? address : null}
+                                onChange={(e) => setAddress(e.target.value)}
                             />
                         </Field.Root>
                         <Field.Root>
@@ -148,14 +244,25 @@ export default function Form() {
                                 placeholder="Crie uma senha segura"
                                 type="password"
                                 name="password"
-                                outlineColor="#A78BFA"
+                                 _focus={{
+                                    borderColor: '#fe6070',
+                                    boxShadow: '0 0 0 1px #fe6070',
+                                    outline: 'none' 
+                                    }}
+                                value={editMode ? password : null}
+                                onChange={(e) => setPassword(e.target.value)}
                             />
                         </Field.Root>
                         <Field.Root>                            
                             <Input
                                 placeholder="Confirme a senha"
                                 type="password"
-                                outlineColor="#A78BFA"
+                                _focus={{
+                                    borderColor: '#fe6070',
+                                    boxShadow: '0 0 0 1px #fe6070',
+                                    outline: 'none' 
+                                    }}
+                                value={editMode ? password : null} 
                             />
                         </Field.Root>
                         <HStack>
@@ -163,11 +270,16 @@ export default function Form() {
                                 <Field.Label>
                                     Data de Nascimento: 
                                 </Field.Label>
-                                <Input 
-                                    placeholder="Confirme a senha"
+                                <Input                                     
                                     type="datetime-local"
                                     name="datetime"
-                                    outlineColor="#A78BFA"
+                                    _focus={{
+                                        borderColor: '#fe6070',
+                                        boxShadow: '0 0 0 1px #fe6070',
+                                        outline: 'none' 
+                                    }}
+                                    value={editMode ? birthdate : null}
+                                    onChange={(e) => setBirthdate(e.target.value)}
                                 />
                             </Field.Root>
                             <Field.Root>
@@ -177,7 +289,13 @@ export default function Form() {
                                 <NativeSelect.Root>
                                     <NativeSelect.Field 
                                         name="gender"
-                                        outlineColor="#A78BFA"
+                                        _focus={{
+                                            borderColor: '#fe6070',
+                                            boxShadow: '0 0 0 1px #fe6070',
+                                            outline: 'none' 
+                                            }}
+                                        value={editMode ? gender : gender}
+                                        onChange={(e) => setGender(Number(e.target.value))} 
                                     >                                        
                                         
                                         <option value="0">Masculino</option>
@@ -192,8 +310,13 @@ export default function Form() {
                                 <NativeSelect.Root>
                                     <NativeSelect.Field 
                                         name="type"
-                                        outlineColor="#A78BFA"
-                                        onChange={() => document.forms["myForm"]["type"].value == 1 ? setActiveInputDoctor(1) : setActiveInputDoctor(0)}
+                                        _focus={{
+                                    borderColor: '#fe6070',
+                                    boxShadow: '0 0 0 1px #fe6070',
+                                    outline: 'none' 
+                                    }}
+                                        value={editMode ? type : type}
+                                        onChange={(e) => setType(Number(e.target.value))}
                                     >
                                         <option value="1">Médico</option>
                                         <option value="2">Paciente</option>
@@ -204,8 +327,8 @@ export default function Form() {
                         
                         
                             <Field.Root
-                                disabled={activeInputDoctor === 1 ? false : true}
-                                hidden={activeInputDoctor === 1 ? false : true}
+                                disabled={type === 1 ? false : true}
+                                hidden={type === 1 ? false : true}
                             >
                                 <Field.Label>
                                     CRM
@@ -214,19 +337,27 @@ export default function Form() {
                                     placeholder="CRM"
                                     type="text"
                                     name="crm"
-                                    outlineColor="#A78BFA"                                                                            
+                                    _focus={{
+                                        borderColor: '#fe6070',
+                                        boxShadow: '0 0 0 1px #fe6070',
+                                        outline: 'none' 
+                                        }}                                                                            
                                 />
                             </Field.Root> 
                             <Field.Root
-                                disabled={activeInputDoctor === 1 ? false : true}
-                                hidden={activeInputDoctor === 1 ? false : true}
+                                disabled={type === 1 ? false : true}
+                                hidden={type === 1 ? false : true}
                             >
                                 <Field.Label>Especialização: </Field.Label>
                                 <NativeSelect.Root>
                                     <NativeSelect.Field
                                         name="specialization"
-                                        outlineColor="#A78BFA"
-                                    >
+                                         _focus={{
+                                            borderColor: '#fe6070',
+                                            boxShadow: '0 0 0 1px #fe6070',
+                                            outline: 'none' 
+                                            }}
+                                            >
                                         <option value="1">Pediatra</option>
                                     </NativeSelect.Field>
                                 </NativeSelect.Root>
@@ -234,12 +365,12 @@ export default function Form() {
                           
                         <Button 
                             onClick={clickBtnSave}
-                            bgColor="#5B21B6"
+                            bgColor="#fe6070"
                             color="#FAFAFA"
                             loading={false}
                             size="xl"
                         >
-                            Click
+                            Avançar
                         </Button>
                     </VStack>                    
                 </form>
