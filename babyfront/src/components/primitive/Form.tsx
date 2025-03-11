@@ -2,7 +2,7 @@ import UserController from "@/adapters/controllers/UserController";
 
 import { HStack, Input, StackSeparator, Button, VStack, Field, NativeSelect, Text  } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { withMask } from "use-mask-input";
 
 export default function Form() {    
@@ -20,7 +20,8 @@ export default function Form() {
     const location = useLocation();
     const [editMode, setEditMode] = useState(location.pathname.includes("edit"));
     const [state, setState] = useState(location.state);
-    console.log("state: " + JSON.stringify(state));
+    const navigate = useNavigate();
+    
     
     
     useEffect(() => {                
@@ -51,16 +52,15 @@ export default function Form() {
             }
         }
     }, []);
-
-    console.log("Form | After UseEffect");
+    
 
     function clickBtnSave() {        
         
-        let user;
+        let _user;
         if (editMode) {
             if (type == 1) {
 
-                user = {
+                _user = {
                      uuid: uuid,
                      login: email,
                      password: password,
@@ -81,12 +81,12 @@ export default function Form() {
                 
             }
             else {
-                user = {
+                _user = {
                     uuid: uuid,
                     login: email,
                     password: password,
                     name: name,
-                    address: 'Rua Cristo Redentor',
+                    address: address,
                     phone: phone, 
                     email: email,
                     gender: gender, // 0 - Male, 1 - Female,
@@ -103,7 +103,7 @@ export default function Form() {
         else {
             if (type == 1) {
     
-                user = {
+                _user = {
                      uuid: '',
                      login: email,
                      password: password,
@@ -124,12 +124,12 @@ export default function Form() {
                 
             }
             else {
-                user = {
+                _user = {
                     uuid: '',
                     login: email,
                     password: password,
                     name: name,
-                    address: 'Rua Cristo Redentor',
+                    address: address,
                     phone: phone, 
                     email: email,
                     gender: gender, // 0 - Male, 1 - Female,
@@ -142,44 +142,64 @@ export default function Form() {
                }
             }
         }
+                
+        type === 1 ?
+            UserController.save(_user, (data) => console.log("response data: " + JSON.stringify(data)))
+            : UserController.save(_user, (data) => {
+                if (data?.id) {
+                    _user.uuid = data?.id
+                    navigate("/form/gestation", {
+                        state: {
+                            user: {..._user},
+                        }
+                    });
+                }
+            });
         
-        console.log("obj: " + JSON.stringify(user));
-        UserController.save(user, (data) => console.log("response data: " + data));
     }
 
     return (
         <>
-            <VStack
-                separator={<StackSeparator />}
+            <VStack 
+                mt={12}
+                // separator={<StackSeparator />}
                 gap="12px"
             >
-                <Text fontSize="lg" fontWeight="bold" color="#1F2024">Faça seu cadastro</Text>
-                <Text fontSize="medium" fontWeight="normal" color="#71727A"> Crie uma conta para aproveitar nossos serviços!</Text>
+                <Text fontSize="3xl" fontWeight="bold" color="#1F2024">Faça seu cadastro</Text>
+                <Text fontSize="lg" fontWeight="normal" color="#71727A"> Crie uma conta para aproveitar nossos serviços!</Text>
                 <form 
                     name="myForm"
                     id="form"                    
                 >
-                    <VStack gap="12px">                        
+                    <VStack gap="12px" mt={4}>                        
                         <Field.Root>
                             <Field.Label>Nome Completo: </Field.Label>
                             <Input 
                                 placeholder="Nome Completo"
                                 type="text"
                                 name="name"
-                                outlineColor="#A78BFA"
+                               _focus={{
+                                    borderColor: '#fe6070',
+                                    boxShadow: '0 0 0 1px #fe6070',
+                                    outline: 'none' 
+                                    }}
                                 value={editMode ? name : null}
                                 onChange={(e) => setName(e.target.value)}
                             />
                         </Field.Root>
                         <HStack>
                             
-                            <Field.Root>
+                            <Field.Root  >
                                 <Field.Label>Email: </Field.Label>
                                 <Input 
                                     placeholder="nome@email.com"
                                     type="email"
                                     name="email"
-                                    outlineColor="#A78BFA"
+                                     _focus={{
+                                        borderColor: '#fe6070',
+                                        boxShadow: '0 0 0 1px #fe6070',
+                                        outline: 'none' 
+                                        }}
                                     value={editMode ? email : null}
                                     onChange={(e) => setEmail(e.target.value)}
                                     
@@ -191,7 +211,11 @@ export default function Form() {
                                     placeholder="(99) 99999-9999"
                                     type="text"
                                     name="phone"
-                                    outlineColor="#A78BFA"
+                                    _focus={{
+                                    borderColor: '#fe6070',
+                                    boxShadow: '0 0 0 1px #fe6070',
+                                    outline: 'none' 
+                                    }}
                                     ref={withMask("(99) 99999-9999")}
                                     value={editMode ? phone : null}
                                     onChange={(e) => setPhone(e.target.value)}
@@ -205,7 +229,11 @@ export default function Form() {
                                 placeholder="Endereço"
                                 type="text"
                                 name="address"
-                                outlineColor="#A78BFA"
+                                 _focus={{
+                                    borderColor: '#fe6070',
+                                    boxShadow: '0 0 0 1px #fe6070',
+                                    outline: 'none' 
+                                    }}
                                 value={editMode ? address : null}
                                 onChange={(e) => setAddress(e.target.value)}
                             />
@@ -216,7 +244,11 @@ export default function Form() {
                                 placeholder="Crie uma senha segura"
                                 type="password"
                                 name="password"
-                                outlineColor="#A78BFA"
+                                 _focus={{
+                                    borderColor: '#fe6070',
+                                    boxShadow: '0 0 0 1px #fe6070',
+                                    outline: 'none' 
+                                    }}
                                 value={editMode ? password : null}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
@@ -225,7 +257,11 @@ export default function Form() {
                             <Input
                                 placeholder="Confirme a senha"
                                 type="password"
-                                outlineColor="#A78BFA"
+                                _focus={{
+                                    borderColor: '#fe6070',
+                                    boxShadow: '0 0 0 1px #fe6070',
+                                    outline: 'none' 
+                                    }}
                                 value={editMode ? password : null} 
                             />
                         </Field.Root>
@@ -237,7 +273,11 @@ export default function Form() {
                                 <Input                                     
                                     type="datetime-local"
                                     name="datetime"
-                                    outlineColor="#A78BFA"
+                                    _focus={{
+                                        borderColor: '#fe6070',
+                                        boxShadow: '0 0 0 1px #fe6070',
+                                        outline: 'none' 
+                                    }}
                                     value={editMode ? birthdate : null}
                                     onChange={(e) => setBirthdate(e.target.value)}
                                 />
@@ -249,8 +289,12 @@ export default function Form() {
                                 <NativeSelect.Root>
                                     <NativeSelect.Field 
                                         name="gender"
-                                        outlineColor="#A78BFA"
-                                        value={editMode ? gender : 0}
+                                        _focus={{
+                                            borderColor: '#fe6070',
+                                            boxShadow: '0 0 0 1px #fe6070',
+                                            outline: 'none' 
+                                            }}
+                                        value={editMode ? gender : gender}
                                         onChange={(e) => setGender(Number(e.target.value))} 
                                     >                                        
                                         
@@ -266,7 +310,11 @@ export default function Form() {
                                 <NativeSelect.Root>
                                     <NativeSelect.Field 
                                         name="type"
-                                        outlineColor="#A78BFA"
+                                        _focus={{
+                                    borderColor: '#fe6070',
+                                    boxShadow: '0 0 0 1px #fe6070',
+                                    outline: 'none' 
+                                    }}
                                         value={editMode ? type : type}
                                         onChange={(e) => setType(Number(e.target.value))}
                                     >
@@ -289,7 +337,11 @@ export default function Form() {
                                     placeholder="CRM"
                                     type="text"
                                     name="crm"
-                                    outlineColor="#A78BFA"                                                                            
+                                    _focus={{
+                                        borderColor: '#fe6070',
+                                        boxShadow: '0 0 0 1px #fe6070',
+                                        outline: 'none' 
+                                        }}                                                                            
                                 />
                             </Field.Root> 
                             <Field.Root
@@ -300,8 +352,12 @@ export default function Form() {
                                 <NativeSelect.Root>
                                     <NativeSelect.Field
                                         name="specialization"
-                                        outlineColor="#A78BFA"
-                                    >
+                                         _focus={{
+                                            borderColor: '#fe6070',
+                                            boxShadow: '0 0 0 1px #fe6070',
+                                            outline: 'none' 
+                                            }}
+                                            >
                                         <option value="1">Pediatra</option>
                                     </NativeSelect.Field>
                                 </NativeSelect.Root>
@@ -309,12 +365,12 @@ export default function Form() {
                           
                         <Button 
                             onClick={clickBtnSave}
-                            bgColor="#5B21B6"
+                            bgColor="#fe6070"
                             color="#FAFAFA"
                             loading={false}
                             size="xl"
                         >
-                            Click
+                            Avançar
                         </Button>
                     </VStack>                    
                 </form>
