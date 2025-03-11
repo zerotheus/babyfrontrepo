@@ -86,11 +86,11 @@ export default function SearchableUsers() {
               />
                 </Table.Cell>
                 <Table.Cell>{user.name}</Table.Cell>
-                <Table.Cell>{user.type}</Table.Cell>                                                
+                <Table.Cell>{user.type==1? "Médico": "Paciente"}</Table.Cell>                                                
                 <Table.Cell >
                     <HStack>
                         <FaRegEdit title="Editar" cursor={"pointer"} size={24} onClick={() => navigate(`/form/edit/${user.uuid}`, {state: {...user}})}/>
-                        <FaRegEye title="Criar" cursor={"pointer"} size={24} onClick={() => navigate(`/user`)} />
+                        {/* <FaRegEye title="Criar" cursor={"pointer"} size={24} onClick={() => navigate(`/user`)} /> */}
                         <FaRegTrashAlt title="Deletar" cursor={"pointer"} size={24} color="red" />
                     </HStack>
                 </Table.Cell>

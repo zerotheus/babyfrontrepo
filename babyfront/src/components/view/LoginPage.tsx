@@ -16,6 +16,9 @@ export default function LoginPage() {
   };
 
   const authentication = (response) => {
+    console.log('====================================');
+    console.log(response.status);
+    console.log('====================================');
     if (response.status === 0) {
       setError("Login ou senha inválidos!");
     } else if (response.status === 1) {

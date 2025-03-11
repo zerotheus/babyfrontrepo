@@ -1,5 +1,5 @@
 import UserController from "@/adapters/controllers/UserController";
-
+import { getTimeFromDate } from "../view/PregnantDataView";
 import { HStack, Input, StackSeparator, Button, VStack, Field, NativeSelect, Text  } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
@@ -11,7 +11,7 @@ export default function Form() {
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
-    const [birthdate, setBirthdate] = useState("");
+    const [birthdate, setBirthdate] = useState(new Date().toISOString().slice(0, 16));
     const [gender, setGender] = useState(0);
     const [type, setType] = useState(1);
     const [address, setAddress] = useState("");    
@@ -21,19 +21,23 @@ export default function Form() {
     const [editMode, setEditMode] = useState(location.pathname.includes("edit"));
     const [state, setState] = useState(location.state);
     const navigate = useNavigate();
-    
-    
-    
-    useEffect(() => {                
+        
+    function convertDate(date: string): string {
+        const formattedDate = new Date(date).toISOString().slice(0, 16);
+        return formattedDate;
+    }
+
+
+    useEffect(() => {          
         if (editMode) {
             if (state.type == 1) {
                 setUuid(state.uuid);
                 setName(state.name);
                 setEmail(state.email);
-                setBirthdate(state.birthdate);
+                setBirthdate(convertDate(state.birthdate));
                 setPhone(state.phone);
                 setGender(state.gender);
-                setPassword(state.password);
+                
                 setCrm(state.crm);
                 setType(state.type);
                 setAddress(state.address);
@@ -43,10 +47,10 @@ export default function Form() {
                 setUuid(state.uuid);
                 setName(state.name);
                 setEmail(state.email);
-                setBirthdate(state.birthdate);
+                setBirthdate(convertDate(state.birthdate));
                 setPhone(state.phone);
                 setGender(state.gender);
-                setPassword(state.password);                
+                                
                 setType(state.type);
                 setAddress(state.address);
             }
@@ -271,7 +275,7 @@ export default function Form() {
                                     Data de Nascimento: 
                                 </Field.Label>
                                 <Input                                     
-                                    type="datetime-local"
+                                    type="date"
                                     name="datetime"
                                     _focus={{
                                         borderColor: '#fe6070',
@@ -298,8 +302,8 @@ export default function Form() {
                                         onChange={(e) => setGender(Number(e.target.value))} 
                                     >                                        
                                         
-                                        <option value="0">Masculino</option>
-                                        <option value="1">Feminio</option>
+                                        <option value="1">Masculino</option>
+                                        <option value="0">Feminino</option>
                                     </NativeSelect.Field>
                                 </NativeSelect.Root>
                             </Field.Root>

@@ -1,7 +1,7 @@
 import RegistrationGestationController from "@/adapters/controllers/RegisterGestationController";
 import { Field, HStack, Input, StackSeparator, VStack, NumberInput, Button } from "@chakra-ui/react";
 import { useState } from "react";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 export default function FormGestation() {
     const [patientID, setPatientID] = useState("");
@@ -12,6 +12,7 @@ export default function FormGestation() {
     const [selectedUltrasoundDate, setSelectedUltrasoundDate] = useState(new Date());
     const [equipament, setEquipament] = useState("");
     const location = useLocation();
+    const navigate = useNavigate();
     const state = location.state;
     
     async function clickBtnSave(): Promise<void> {
@@ -27,7 +28,10 @@ export default function FormGestation() {
             ultrasounddate: selectedUltrasoundDate,
             equipament: equipament
         }
-        RegistrationGestationController.save(gestationData, (data) => console.log("data: " + JSON.stringify(data)));
+        RegistrationGestationController.save(gestationData, (data) => {
+            alert("Gestação cadastrada!");
+            navigate("/home");
+        });
     }
     return (
         <>
@@ -60,7 +64,7 @@ export default function FormGestation() {
                     <Field.Root>
                         <Field.Label>Data da Última menstruação: </Field.Label>
                         <Input
-                            type="datetime-local"
+                            type="date"
                             name="datetime"
                             _focus={{
                                 borderColor: '#fe6070',
@@ -75,7 +79,7 @@ export default function FormGestation() {
                     <Field.Root>
                         <Field.Label>Data da Primeira Ultrassonografia: </Field.Label>
                         <Input
-                            type="datetime-local"
+                            type="date"
                             name="datetime"
                              _focus={{
                                     borderColor: '#fe6070',
