@@ -74,7 +74,7 @@ const SearchablePregnants = forwardRef((props, ref) => {
                                     checked={indeterminate ? "indeterminate" : selection.length > 0}
                                     onCheckedChange={(changes) => {
                                         setSelection(
-                                            changes.checked ? pregnants.map((item) => item.userID) : [],
+                                            changes.checked ? pregnants.map((item) => item.patientID) : [],
                                         )
                                     }}
                                 /> */}
@@ -94,19 +94,19 @@ const SearchablePregnants = forwardRef((props, ref) => {
                                     pregnant.nome.toLowerCase().includes(input.toLowerCase())
                                 ).slice((10 * page) - 10, 10 * (page))
                                 .map((pregnant) => (
-                                    <Table.Row key={pregnant.userID} data-selected={selection.includes(pregnant.userID) ? "" : undefined}>
+                                    <Table.Row key={pregnant.patientID} data-selected={selection.includes(pregnant.patientID) ? "" : undefined}>
                                         <Table.Cell>
                                             <Checkbox
                                                 top="1"
                                                 aria-label="Select row"
-                                                checked={selection.includes(pregnant.userID)}
+                                                checked={selection.includes(pregnant.patientID)}
                                                 onCheckedChange={(changes) => {
                                                     setSelection((prev) => {
                                                         console.log(prev)
 
                                                         return changes.checked
-                                                            ? [...prev, pregnant.userID]
-                                                            : selection.filter((name) => name !== pregnant.userID)
+                                                            ? [...prev, pregnant.patientID]
+                                                            : selection.filter((name) => name !== pregnant.patientID)
                                                     }
                                                     )
 
