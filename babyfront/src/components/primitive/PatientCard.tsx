@@ -1,5 +1,19 @@
 import { Box, Button, Card, Image, Text } from "@chakra-ui/react"
 
+export function calcularDiferencaAnos(dataString) {
+    const dataFornecida = new Date(dataString);
+    const dataAtual = new Date();
+  
+    // Calcula a diferença em milissegundos
+    const diferencaEmMs = dataAtual - dataFornecida;
+  
+    // Converte para anos (1 anos = 7 dias * 24h * 60m * 60s * 1000ms)
+    const anos = Math.floor(diferencaEmMs / (365 * 24 * 60 * 60 * 1000));
+  
+    return anos;
+  }
+
+
 export const PatientCard = (props) => (
     <Card.Root flexDirection="row" overflow="hidden" width="90%" maxWidth={600} >
         <Image
@@ -13,7 +27,7 @@ export const PatientCard = (props) => (
                 <Card.Title fontSize={28} mb="4">Dados da paciente</Card.Title>
                 <Card.Description>
                     <Text fontSize={18}> Nome: {props.patientName}</Text>
-                    <Text fontSize={18}> Idade: {props.age} </Text>
+                    <Text fontSize={18}> Idade: {calcularDiferencaAnos(props.age)} </Text>
                     <Text fontSize={18}> Gestação: {props.gestation}</Text>
                     <Text fontSize={18}> Semana de gestação: {props.week} </Text>
                 </Card.Description>

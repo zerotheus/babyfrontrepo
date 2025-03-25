@@ -23,6 +23,7 @@ import { PressureGraphicCard } from "../primitive/PressureGraphicCard";
 import { Header } from "../primitive/Header";
 import GetOnePregnantDataController from "@/adapters/controllers/GetOnePregnantDataController";
 import { PatientCard } from "../primitive/PatientCard";
+import { MovementGraphicCard } from "../primitive/MovementGraphicCard";
 
 export function getTimeFromDate(dateString) {
   const date = new Date(dateString);
@@ -149,6 +150,7 @@ export function PregnantDataView() {
       <PatientCard
         patientName={paciente.patientName}
         gestation={paciente.babyName}
+        age={paciente.birthday}
         week={calcularDiferencaSemanas(paciente.initialDate)}
       />
       <HStack gap={30} wrap="wrap" justifyContent="center">
@@ -172,7 +174,7 @@ export function PregnantDataView() {
           titulo={"Pressão Arterial"}
           tipo={'pressure'}
         />
-        <GraphicCard
+        <MovementGraphicCard
           dadosDoGrafico={dadosDoGraficoFetal}
           eixoX={"Date"}
           eixoY={"FetusDisplacement"}
